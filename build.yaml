@@ -1,0 +1,15 @@
+# GitHub Actions build matrix. Push to main -> Actions -> download "firmware" zip.
+---
+include:
+  # Left half is the central (talks to the computer). ZMK Studio enabled over USB.
+  - board: nice_nano_v2
+    shield: lily58_left nice_view_adapter nice_view
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+    artifact-name: lily58_left_studio
+  - board: nice_nano_v2
+    shield: lily58_right nice_view_adapter nice_view
+    artifact-name: lily58_right
+  # Flash this to BOTH halves if they ever won't pair; then reflash the normal files.
+  - board: nice_nano_v2
+    shield: settings_reset
