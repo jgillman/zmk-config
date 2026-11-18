@@ -15,16 +15,12 @@
 #define FN   1
 #define SYS  2
 
-/ {
-    macros {
-        hyper: hyper {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&none &kp RS(RA(RG(RIGHT_ALT)))>;
-            label = "HYPER";
-        };
-    };
+// Hyper = Shift+Ctrl+Opt+Cmd, held for as long as the key is held, so Hyper+letter
+// works like any other modifier chord. Matches Raycast's Hyper Key, but built into the
+// board so it works on any machine without Raycast remapping Right Opt.
+#define HYPER LS(LC(LA(LGUI)))
 
+/ {
     keymap {
         compatible = "zmk,keymap";
 
@@ -35,14 +31,15 @@
             // | TAB   |  Q  |  W  |  E  |  R  |  T  |                 |  Y  |  U  |  I  |  O  |  P  | BSPC  |
             // | CTRL  |  A  |  S  |  D  |  F  |  G  |                 |  H  |  J  |  K  |  L  |  ;  |  '    |
             // | SHIFT |  Z  |  X  |  C  |  V  |  B  |  [  |     |  ]  |  N  |  M  |  ,  |  .  |  /  | SHIFT |
-            //                   | OPT | CMD | BSPC|  FN   |     | ENTER |SPACE| CMD | OPT |
+            //                   | OPT | OPT | CMD |  FN   |     | ENTER |SPACE| CMD |HYPER|
+            // Left thumb rests on CMD, mirroring SPACE on the right.
 
             bindings = <
 &gresc     &kp N1  &kp N2  &kp N3    &kp N4    &kp N5                              &kp N6     &kp N7    &kp N8     &kp N9   &kp N0    &kp MINUS
 &kp TAB    &kp Q   &kp W   &kp E     &kp R     &kp T                               &kp Y      &kp U     &kp I      &kp O    &kp P     &kp BSPC
 &kp LCTRL  &kp A   &kp S   &kp D     &kp F     &kp G                               &kp H      &kp J     &kp K      &kp L    &kp SEMI  &kp SQT
 &sk LSHFT  &kp Z   &kp X   &kp C     &kp V     &kp B         &kp LBKT    &kp RBKT  &kp N      &kp M     &kp COMMA  &kp DOT  &kp FSLH  &sk RSHFT
-                           &kp LALT  &kp LGUI  &kp LEFT_ALT  &mo FN      &kp RET   &kp SPACE  &kp RGUI  &hyper
+                           &kp LALT  &kp LALT  &kp LGUI      &mo FN      &kp RET   &kp SPACE  &kp RGUI  &kp HYPER
             >;
         };
 
